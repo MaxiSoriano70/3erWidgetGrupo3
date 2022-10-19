@@ -103,7 +103,7 @@ class _CustomButton2State extends State<CustomButton2> {
       return Padding(
         padding: const EdgeInsets.only(right: 5),
         child: Icon(
-          widget.icon,
+          widget.icon!,
           color: widget.iconColor,
           size: widget.iconSize ?? (widget.height / 2),
         ),

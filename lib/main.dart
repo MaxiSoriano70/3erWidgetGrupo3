@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:logindesafio3/component/component_button.dart';
 import 'package:logindesafio3/component/component_button_ii.dart';
+import 'package:animated_icon_button/animated_icon_button.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 
 void main() {
   runApp(const MyApp());
@@ -43,13 +45,13 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   bool isHover=false;
+  bool isEnable = true;
   @override
   Widget build(BuildContext context) {
     return loginUser(MediaQuery.of(context).size.width);
   }
 
   Widget loginUser(double width){
-    bool habilitado= true;
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -72,12 +74,12 @@ class _LoginState extends State<Login> {
                       cursorColor: Colors.black,
                       decoration: InputDecoration(
                         hintText: "Correo",
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+                        contentPadding: const EdgeInsets.fromLTRB(20, 18, 20, 18),
                         filled: true,
                         fillColor: const Color(0xffc9c9c9),
                         border: OutlineInputBorder(
                             borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(10)
+                            borderRadius: BorderRadius.circular(20)
                         ),
                       ),
                       style: const TextStyle(
@@ -88,23 +90,52 @@ class _LoginState extends State<Login> {
 
                     //CONTRASEÑA
                     TextField(
-                      obscureText: habilitado,
+                      obscureText: getEnable(),
                       cursorColor: Colors.black,
+                        style: const TextStyle(
+                       color: Colors.black,
+                      fontSize: 18),
                       decoration: InputDecoration(
                         hintText: "Contraseña",
                         contentPadding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                         filled: true,
+
                         fillColor: const Color(0xffc9c9c9),
                         border: OutlineInputBorder(
                             borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(10)
+                            borderRadius: BorderRadius.circular(20)
                         ),
                         suffixIcon:  Align(
-                          widthFactor: 2.5,
+                          widthFactor: 1.5,
                           heightFactor: 1.0,
-                          child: IconButton(onPressed: (){}, icon: Icon(Icons.visibility_off_outlined)),
-                    ),),),
-                    const SizedBox(height: 20,),
+                          child: AnimatedIconButton(
+                            splashColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onPressed: () => print('all icons pressed'),
+                            icons: [
+                              AnimatedIconItem(
+                                icon: const Icon(
+                                  Icons.visibility_off_outlined,
+                                  color: Colors.grey,
+                                ),
+                                onPressed: () => setState(() {
+                                  isEnable = true;
+                                }),
+                                backgroundColor: Colors.transparent,),
+                              AnimatedIconItem(
+                                icon: const Icon(
+                                  Icons.remove_red_eye_outlined,
+                                  color: Colors.grey,
+                                ),
+                                onPressed: () => setState(() {
+                                  isEnable = false;
+                                }),
+                                backgroundColor: Colors.transparent,)
+                            ],
+                          )
+                        ))),
+                         const SizedBox(height: 20,),
+
 
                     //OLVIDASTE TU CONTRASEÑA
                     MouseRegion(
@@ -125,10 +156,15 @@ class _LoginState extends State<Login> {
                         child: Text("¿Te olvidaste del INKWELL?",style: TextStyle(color: isHover?Colors.black:Colors.grey),),
                       ),
                     ),
-
-                    //FALTA EL BUTTON INGRESAR
-
-
+                    SizedBox(height: 30,),
+                    CustomButton2(
+                      text: 'Ingresar',
+                      backgroundColor: Colors.teal,
+                      onTap:  () => print('lo hicimos!!'),
+                      height: 50,
+                      width: 345,
+                      iconSize: 12,
+                    ),
                   ],
                 ),
               ),
@@ -162,7 +198,7 @@ class _LoginState extends State<Login> {
               ),*/
               CustomButton2(
                 text: '',
-                icon: Icons.g_mobiledata_rounded,
+                icon: EvaIcons.google,
                 backgroundColor: Colors.indigo,
                 onTap:  () => print('lo hicimos!!'),
                 //height: 50,
@@ -183,7 +219,7 @@ class _LoginState extends State<Login> {
               ),*/
               CustomButton2(
                    text: '',
-                   icon: Icons.g_mobiledata_rounded,
+                   icon: EvaIcons.activity,
                    backgroundColor: Colors.red,
                    onTap:  () => print('lo hicimos!!'),
                   //height: 50,
@@ -228,4 +264,9 @@ class _LoginState extends State<Login> {
       ),
     );
   }
+
+  getEnable() {
+    return isEnable;
+  }
+
 }
