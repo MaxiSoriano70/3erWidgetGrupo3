@@ -198,7 +198,7 @@ class _LoginState extends State<Login> {
               ),*/
               CustomButton2(
                 text: '',
-                icon: EvaIcons.google,
+                icon: EvaIcons.facebook,
                 backgroundColor: Colors.indigo,
                 onTap:  () => print('lo hicimos!!'),
                 //height: 50,
@@ -219,7 +219,7 @@ class _LoginState extends State<Login> {
               ),*/
               CustomButton2(
                    text: '',
-                   icon: EvaIcons.activity,
+                   icon: EvaIcons.google,
                    backgroundColor: Colors.red,
                    onTap:  () => print('lo hicimos!!'),
                   //height: 50,
