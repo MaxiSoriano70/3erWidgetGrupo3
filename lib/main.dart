@@ -6,110 +6,206 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
+      home: Scaffold(
+        backgroundColor: Colors.grey,
+        body: Stack(
+          children: const [
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
+            //COMENTE EL GATITO PARA QUE SE VEA DE FONDO GRIS
+            /*Container(
+              alignment: Alignment.center,
+              child: const Image(image: NetworkImage(
+                  "https://images.unsplash.com/photo-1579202673506-ca3ce28943ef"
+              ),
+                fit: BoxFit.cover,
+              )
+            ),*/
+            Login(),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
+
+class Login extends StatefulWidget {
+  const Login({Key? key}) : super(key: key);
+
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+  bool isHover=false;
+  @override
+  Widget build(BuildContext context) {
+    return loginUser(MediaQuery.of(context).size.width);
+  }
+
+  Widget loginUser(double width){
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          //MATERIAL
+          Material(
+            borderRadius: const BorderRadius.all(Radius.circular(32)),
+            color: Colors.white,
+            shadowColor: Colors.grey,
+            elevation: 20,
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 30,horizontal: 30),
+              width: width*0.8,
+              child: Form(
+                child: Column(
+                  children: [
+                    //CORREO
+                    TextField(
+                      keyboardType: TextInputType.emailAddress,
+                      cursorColor: Colors.black,
+                      decoration: InputDecoration(
+                        hintText: "Correo",
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+                        filled: true,
+                        fillColor: const Color(0xffc9c9c9),
+                        border: OutlineInputBorder(
+                            borderSide: BorderSide.none,
+                            borderRadius: BorderRadius.circular(10)
+                        ),
+                      ),
+                      style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 18),
+                    ),
+                    const SizedBox(height: 20,),
+
+                    //CONTRASEÑA
+                    TextField(
+                      obscureText: true,
+                      cursorColor: Colors.black,
+                      decoration: InputDecoration(
+                        hintText: "Contraseña",
+                        contentPadding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                        filled: true,
+                        fillColor: const Color(0xffc9c9c9),
+                        border: OutlineInputBorder(
+                            borderSide: BorderSide.none,
+                            borderRadius: BorderRadius.circular(10)
+                        ),
+                        suffixIcon: const Align(
+                          widthFactor: 2.5,
+                          heightFactor: 1.0,
+                          child: Icon(
+                            Icons.remove_red_eye,
+                            color: Color(0xff7c7c7c),
+                          ),
+                        ),
+                      ),
+                      style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 18),
+                    ),
+                    const SizedBox(height: 20,),
+
+                    //OLVIDASTE TU CONTRASEÑA
+                    MouseRegion(
+                      onEnter: (e){
+                        setState(() {
+                          isHover=true;
+                        });
+                      },
+                      onExit: (e){
+                        setState(() {
+                          isHover=false;
+                        });
+                      },
+                      child: InkWell(
+                        onTap: (){},
+                        hoverColor: Colors.white,
+                        child: Text("¿Te olvidaste del INKWELL?",style: TextStyle(color: isHover?Colors.black:Colors.grey),),
+                      ),
+                    ),
+
+                    //FALTA EL BUTTON INGRESAR
+
+
+                  ],
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 20,),
+
+          //INGRESAR CON
+
+          const Text("Ingresar con",
+            style:TextStyle(
+              color: Colors.black,
+              fontSize: 18,
+            ),
+          ),
+          const SizedBox(height: 20,),
+          //BUTTONS
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              InkWell(
+                onTap: (){},
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 70),
+                  decoration: const BoxDecoration(
+                    color: Colors.indigo,
+                    borderRadius: BorderRadius.all(Radius.circular(30))
+                  ),
+                  child: const Icon(Icons.facebook,size: 40,color: Colors.white,),
+                ),
+              ),
+              const SizedBox(width: 20,),
+              InkWell(
+                onTap: (){},
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 70),
+                  decoration: const BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.all(Radius.circular(30))
+                  ),
+                  child: const Icon(Icons.g_mobiledata,size: 40,color: Colors.white,),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 20,),
+
+          //REGISTRATE AQUI
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text("Si no tenés cuenta ",
+                style:TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                ),
+              ),
+              InkWell(
+                onTap: (){},
+                child: const Text("registrate aquí",
+                    style:TextStyle(
+                      decoration: TextDecoration.underline,
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    )
+                ),
+              )
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
