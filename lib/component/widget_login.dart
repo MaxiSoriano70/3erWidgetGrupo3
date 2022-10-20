@@ -89,8 +89,8 @@ class _LoginState extends State<Login> {
   Widget loginUser(double width,double height){
     return Container(
       width: width*0.8,
-      height: height*0.5,
-      margin: EdgeInsets.fromLTRB(width*0.1, height*0.3, width*0.1, height*0.2),
+      height: height*0.6,
+      margin: EdgeInsets.fromLTRB(width*0.1, height*0.25, width*0.1, height*0.15),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -154,9 +154,9 @@ class _LoginState extends State<Login> {
             ),
             style: const TextStyle(
                 color: Colors.black,
-                fontSize: 18),
+                fontSize: 16),
           ),
-          const SizedBox(height: 20,),
+          const SizedBox(height: 15,),
 
           //CONTRASEÑA
           TextFormField(
@@ -172,12 +172,11 @@ class _LoginState extends State<Login> {
               cursorColor: Colors.black,
               style: const TextStyle(
                   color: Colors.black,
-                  fontSize: 18),
+                  fontSize: 16),
               decoration: InputDecoration(
                   hintText: "Contraseña",
                   contentPadding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                   filled: true,
-
                   fillColor: const Color(0xffedfafd),
                   border: OutlineInputBorder(
                       borderSide: BorderSide.none,
@@ -194,7 +193,7 @@ class _LoginState extends State<Login> {
                           AnimatedIconItem(
                             icon: const Icon(
                               Icons.visibility_off_outlined,
-                              size: 19,
+                              size: 18,
                               color: Colors.grey,
                             ),
                             onPressed: () => setState(() {
@@ -204,7 +203,7 @@ class _LoginState extends State<Login> {
                           AnimatedIconItem(
                             icon: const Icon(
                               Icons.remove_red_eye_outlined,
-                              size: 19,
+                              size: 18,
                               color: Colors.grey,
                             ),
                             onPressed: () => setState(() {
@@ -214,10 +213,10 @@ class _LoginState extends State<Login> {
                         ],
                       )
                   ))),
-          const SizedBox(height: 20,),
+          const SizedBox(height: 15,),
           //OLVIDASTE TU CONTRASEÑA
           forgotPassword(),
-          const SizedBox(height: 30,),
+          const SizedBox(height: 25,),
           CustomButton2(
             text: 'Ingresar',
             backgroundColor: Colors.teal,
