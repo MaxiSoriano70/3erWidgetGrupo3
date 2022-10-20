@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         backgroundColor: Colors.grey,
         body: Stack(
-          children: const  [
+          children:[
 
             //COMENTE EL GATITO PARA QUE SE VEA DE FONDO GRIS
             /*Container(
@@ -26,7 +26,13 @@ class MyApp extends StatelessWidget {
                 fit: BoxFit.cover,
               )
             ),*/
-            Login(),
+        Login(
+          onTapRegister: (listaRegister){print(listaRegister);},
+          onTapForgotPassword: (password){print(password);},
+          onTapRegisterFacebook: (facebook){print(facebook);},
+          onTapRegisterGoogle: (google){print(google);},
+          onTapRegisterHere: (registerHere){print(registerHere);},
+        ),
           ],
         ),
       ),

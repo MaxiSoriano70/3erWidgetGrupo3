@@ -28,7 +28,14 @@ class User {
 
 
 class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+  final Function(List<String>)? onTapRegister;
+  final Function(String)? onTapForgotPassword;
+  final Function(String)? onTapRegisterFacebook;
+  final Function(String)? onTapRegisterGoogle;
+  final Function(String)? onTapRegisterHere;
+
+  const Login({Key? key,this.onTapRegister,this.onTapForgotPassword,this.onTapRegisterFacebook,this.onTapRegisterGoogle,this.onTapRegisterHere
+  }) : super(key: key);
 
   @override
   State<Login> createState() => _LoginState();
@@ -40,6 +47,7 @@ class _LoginState extends State<Login> {
     users.add(User("Celeste@gmail.com","Cele123"));
     users.add(User("Martin@silentiumapps.com","Martin123"));
   }
+  List<String> ontapLogin=[];
 
   bool isHover = false;
   bool isEnable = true;
@@ -48,27 +56,37 @@ class _LoginState extends State<Login> {
   late String password;
   final formKey=GlobalKey<FormState>();
 
-  void isUser(String mailUser, String password){
-    bool _isUser=false;
+  String isUser(String mailUser, String password){
+    bool user=false;
     for(int i=0;i<users.length;i++){
       if(users[i].mail==mailUser && users[i].password==password){
-        print(users[i].mail);
-        print(users[i].password);
-        _isUser=true;
+        user=true;
       }
     }
-    if(_isUser==false){
-      print("Usuario no encontrado");
+    if(user==false){
+      return "Usuario no encontrado";
+    }
+    else{
+      return "Usuario encontrado";
     }
   }
 
   void showValues(BuildContext context){
-    //ESTO VALIDA SI ES NULL
     if(formKey.currentState!.validate()){
       formKey.currentState!.save();
-      assert(EmailValidator.validate(mailUser));
-      print("$mailUser $password");
-      isUser(mailUser, password);
+      if(ontapLogin.isEmpty){
+        //SOLUCION CON HISTORIAL
+        ontapLogin.add(mailUser);
+        ontapLogin.add(password);
+        bool isValid = EmailValidator.validate(mailUser);
+        ontapLogin.add(isValid ?isUser(mailUser, password):"No es un correo valido");
+      }else{
+        //SOLUCION UNICA
+        ontapLogin[0]=mailUser;
+        ontapLogin[1]=password;
+        bool isValid = EmailValidator.validate(mailUser);
+        ontapLogin[2]=(isValid ?isUser(mailUser, password):"No es un correo valido");
+      }
     }
   }
 
@@ -135,8 +153,9 @@ class _LoginState extends State<Login> {
             },
             validator: (value){
              if(value!.isEmpty){
-               return "Llene esta campo";
+               return "*Campo Obligatorio";
              }
+             return null;
             },
             keyboardType: TextInputType.emailAddress,
             cursorColor: Colors.black,
@@ -163,8 +182,9 @@ class _LoginState extends State<Login> {
               },
               validator: (value){
                 if(value!.isEmpty){
-                  return "Llene esta campo";
+                  return "*Campo Obligatorio";
                 }
+                return null;
               },
               obscureText: getEnable(),
               cursorColor: Colors.black,
@@ -181,7 +201,7 @@ class _LoginState extends State<Login> {
                       borderSide: BorderSide.none,
                       borderRadius: BorderRadius.circular(20)
                   ),
-                  suffixIcon:  Align(
+                  suffixIcon: Align(
                       widthFactor: 1.5,
                       heightFactor: 1.0,
                       child: AnimatedIconButton(
@@ -219,6 +239,7 @@ class _LoginState extends State<Login> {
             backgroundColor: Colors.teal,
             onTap:  (){
               showValues(context);
+              widget.onTapRegister!(ontapLogin);
             },
             height: 50,
             width: 345,
@@ -243,6 +264,7 @@ class _LoginState extends State<Login> {
       },
       child: InkWell(
         onTap: (){
+          widget.onTapForgotPassword!("Hicieron click en olvidaste tu contraseña");
         },
         hoverColor: Colors.white,
         child: Text("¿Te olvidaste del INKWELL?",style: TextStyle(color: isHover?Colors.black:Colors.grey),),
@@ -267,7 +289,9 @@ class _LoginState extends State<Login> {
           text: '',
           icon: EvaIcons.facebook,
           backgroundColor: Colors.indigo,
-          onTap:  () => print('lo hicimos!!'),
+          onTap:  (){
+            widget.onTapRegisterFacebook!("Hicieron click en Facebook");
+          },
           //height: 50,
           width: 200,
           iconSize: 40,
@@ -277,7 +301,9 @@ class _LoginState extends State<Login> {
           text: '',
           icon: EvaIcons.google,
           backgroundColor: Colors.red,
-          onTap:  () => print('lo hicimos!!'),
+          onTap:  (){
+            widget.onTapRegisterGoogle!("Hicieron click en Google");
+          },
           //height: 50,
           width: 200,
           iconSize: 40,
@@ -297,7 +323,9 @@ class _LoginState extends State<Login> {
           ),
         ),
         InkWell(
-          onTap: (){},
+          onTap: (){
+            widget.onTapRegisterHere!("Hicieron click en Reqistrate Aquí");
+          },
           child: const Text("registrate aquí",
               style:TextStyle(
                 decoration: TextDecoration.underline,
