@@ -28,14 +28,7 @@ class User {
 
 
 class Login extends StatefulWidget {
-  final Function(List<String>)? onTapRegister;
-  final Function(String)? onTapForgotPassword;
-  final Function(String)? onTapRegisterFacebook;
-  final Function(String)? onTapRegisterGoogle;
-  final Function(String)? onTapRegisterHere;
-
-  const Login({Key? key,this.onTapRegister,this.onTapForgotPassword,this.onTapRegisterFacebook,this.onTapRegisterGoogle,this.onTapRegisterHere
-  }) : super(key: key);
+  const Login({Key? key}) : super(key: key);
 
   @override
   State<Login> createState() => _LoginState();
@@ -47,7 +40,6 @@ class _LoginState extends State<Login> {
     users.add(User("Celeste@gmail.com","Cele123"));
     users.add(User("Martin@silentiumapps.com","Martin123"));
   }
-  List<String> ontapLogin=[];
 
   bool isHover = false;
   bool isEnable = true;
@@ -56,37 +48,26 @@ class _LoginState extends State<Login> {
   late String password;
   final formKey=GlobalKey<FormState>();
 
-  String isUser(String mailUser, String password){
-    bool user=false;
+  void isUser(String mailUser, String password){
+    bool _isUser=false;
     for(int i=0;i<users.length;i++){
       if(users[i].mail==mailUser && users[i].password==password){
-        user=true;
+        print(users[i].mail);
+        print(users[i].password);
+        _isUser=true;
       }
     }
-    if(user==false){
-      return "Usuario no encontrado";
-    }
-    else{
-      return "Usuario encontrado";
+    if(_isUser==false){
+      print("Usuario no encontrado");
     }
   }
 
   void showValues(BuildContext context){
+    //ESTO VALIDA SI ES NULL
     if(formKey.currentState!.validate()){
       formKey.currentState!.save();
-      if(ontapLogin.isEmpty){
-        //SOLUCION CON HISTORIAL
-        ontapLogin.add(mailUser);
-        ontapLogin.add(password);
-        bool isValid = EmailValidator.validate(mailUser);
-        ontapLogin.add(isValid ?isUser(mailUser, password):"No es un correo valido");
-      }else{
-        //SOLUCION UNICA
-        ontapLogin[0]=mailUser;
-        ontapLogin[1]=password;
-        bool isValid = EmailValidator.validate(mailUser);
-        ontapLogin[2]=(isValid ?isUser(mailUser, password):"No es un correo valido");
-      }
+      print("$mailUser $password");
+      isUser(mailUser, password);
     }
   }
 
@@ -135,7 +116,8 @@ class _LoginState extends State<Login> {
       elevation: 20,
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 30,horizontal: 30),
-        width: width*0.8,
+        margin: EdgeInsets.only(top:10),
+        width: width*0.55,
         child: registerUser(),
       ),
     );
@@ -145,6 +127,7 @@ class _LoginState extends State<Login> {
     return Form(
       key: formKey,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           //CORREO
           TextFormField(
@@ -152,10 +135,9 @@ class _LoginState extends State<Login> {
               mailUser=value!;
             },
             validator: (value){
-             if(value!.isEmpty){
-               return "*Campo Obligatorio";
-             }
-             return null;
+              if(value!.isEmpty){
+                return "Llene esta campo";
+              }
             },
             keyboardType: TextInputType.emailAddress,
             cursorColor: Colors.black,
@@ -163,7 +145,7 @@ class _LoginState extends State<Login> {
               hintText: "Correo",
               contentPadding: const EdgeInsets.fromLTRB(20, 18, 20, 18),
               filled: true,
-              fillColor: const Color(0xffc9c9c9),
+              fillColor: const Color(0xffedfafd),
               border: OutlineInputBorder(
                   borderSide: BorderSide.none,
                   borderRadius: BorderRadius.circular(20)
@@ -182,9 +164,8 @@ class _LoginState extends State<Login> {
               },
               validator: (value){
                 if(value!.isEmpty){
-                  return "*Campo Obligatorio";
+                  return "Llene esta campo";
                 }
-                return null;
               },
               obscureText: getEnable(),
               cursorColor: Colors.black,
@@ -196,13 +177,13 @@ class _LoginState extends State<Login> {
                   contentPadding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                   filled: true,
 
-                  fillColor: const Color(0xffc9c9c9),
+                  fillColor: const Color(0xffedfafd),
                   border: OutlineInputBorder(
                       borderSide: BorderSide.none,
                       borderRadius: BorderRadius.circular(20)
                   ),
-                  suffixIcon: Align(
-                      widthFactor: 1.5,
+                  suffixIcon:  Align(
+                      widthFactor: 1.0,
                       heightFactor: 1.0,
                       child: AnimatedIconButton(
                         splashColor: Colors.transparent,
@@ -212,6 +193,7 @@ class _LoginState extends State<Login> {
                           AnimatedIconItem(
                             icon: const Icon(
                               Icons.visibility_off_outlined,
+                              size: 19,
                               color: Colors.grey,
                             ),
                             onPressed: () => setState(() {
@@ -221,6 +203,7 @@ class _LoginState extends State<Login> {
                           AnimatedIconItem(
                             icon: const Icon(
                               Icons.remove_red_eye_outlined,
+                              size: 19,
                               color: Colors.grey,
                             ),
                             onPressed: () => setState(() {
@@ -239,11 +222,10 @@ class _LoginState extends State<Login> {
             backgroundColor: Colors.teal,
             onTap:  (){
               showValues(context);
-              widget.onTapRegister!(ontapLogin);
             },
-            height: 50,
-            width: 345,
-            iconSize: 12,
+            height: 45,
+            width: 390,
+            textSize: 17,
           ),
         ],
       ),
@@ -262,12 +244,14 @@ class _LoginState extends State<Login> {
           isHover=false;
         });
       },
-      child: InkWell(
-        onTap: (){
-          widget.onTapForgotPassword!("Hicieron click en olvidaste tu contraseña");
-        },
-        hoverColor: Colors.white,
-        child: Text("¿Te olvidaste del INKWELL?",style: TextStyle(color: isHover?Colors.black:Colors.grey),),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 10),
+        child: InkWell(
+          onTap: (){
+          },
+          hoverColor: Colors.white,
+          child: Text("¿Olvidaste tu contraseña?",style: TextStyle(color: isHover?Colors.black:Colors.grey),),
+        ),
       ),
     );
   }
@@ -289,24 +273,21 @@ class _LoginState extends State<Login> {
           text: '',
           icon: EvaIcons.facebook,
           backgroundColor: Colors.indigo,
-          onTap:  (){
-            widget.onTapRegisterFacebook!("Hicieron click en Facebook");
-          },
-          //height: 50,
-          width: 200,
-          iconSize: 40,
+          onTap:  () => print('lo hicimos!!'),
+          height: 40,
+          width: MediaQuery.of(context).size.width*0.45/2.5,
+          iconSize: 25,
+
         ),
         const SizedBox(width: 20,),
         CustomButton2(
           text: '',
           icon: EvaIcons.google,
           backgroundColor: Colors.red,
-          onTap:  (){
-            widget.onTapRegisterGoogle!("Hicieron click en Google");
-          },
-          //height: 50,
-          width: 200,
-          iconSize: 40,
+          onTap:  () => print('lo hicimos!!'),
+          height: 40,
+          width: MediaQuery.of(context).size.width*0.45/2.5,
+          iconSize: 25,
         )
       ],
     );
@@ -319,18 +300,16 @@ class _LoginState extends State<Login> {
         const Text("Si no tenés cuenta ",
           style:TextStyle(
             color: Colors.black,
-            fontSize: 18,
+            fontSize: 15,
           ),
         ),
         InkWell(
-          onTap: (){
-            widget.onTapRegisterHere!("Hicieron click en Reqistrate Aquí");
-          },
+          onTap: (){},
           child: const Text("registrate aquí",
               style:TextStyle(
                 decoration: TextDecoration.underline,
                 color: Colors.black,
-                fontSize: 18,
+                fontSize: 15,
                 fontWeight: FontWeight.bold,
               )
           ),
