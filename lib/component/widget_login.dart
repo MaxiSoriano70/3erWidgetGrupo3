@@ -83,11 +83,14 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    return loginUser(MediaQuery.of(context).size.width);
+    return loginUser(MediaQuery.of(context).size.width,MediaQuery.of(context).size.height);
   }
 
-  Widget loginUser(double width){
-    return Center(
+  Widget loginUser(double width,double height){
+    return Container(
+      width: width*0.8,
+      height: height*0.5,
+      margin: EdgeInsets.fromLTRB(width*0.1, height*0.3, width*0.1, height*0.2),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -116,8 +119,6 @@ class _LoginState extends State<Login> {
       elevation: 20,
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 30,horizontal: 30),
-        margin: EdgeInsets.only(top:10),
-        width: width*0.55,
         child: registerUser(),
       ),
     );
