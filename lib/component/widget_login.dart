@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:logindesafio3/component/component_button.dart';
 import 'package:animated_icon_button/animated_icon_button.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:email_validator/email_validator.dart';
 
 class User {
   String? _mail;
@@ -65,6 +66,7 @@ class _LoginState extends State<Login> {
     //ESTO VALIDA SI ES NULL
     if(formKey.currentState!.validate()){
       formKey.currentState!.save();
+      assert(EmailValidator.validate(mailUser));
       print("$mailUser $password");
       isUser(mailUser, password);
     }
