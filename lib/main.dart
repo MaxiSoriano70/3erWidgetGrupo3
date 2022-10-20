@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:logindesafio3/component/component_button.dart';
-import 'package:logindesafio3/component/component_button_ii.dart';
 import 'package:animated_icon_button/animated_icon_button.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 
@@ -111,7 +110,7 @@ class _LoginState extends State<Login> {
                           child: AnimatedIconButton(
                             splashColor: Colors.transparent,
                             highlightColor: Colors.transparent,
-                            onPressed: () => print('all icons pressed'),
+                            hoverColor: Colors.transparent,
                             icons: [
                               AnimatedIconItem(
                                 icon: const Icon(
@@ -119,7 +118,7 @@ class _LoginState extends State<Login> {
                                   color: Colors.grey,
                                 ),
                                 onPressed: () => setState(() {
-                                  isEnable = true;
+                                  isEnable = false;
                                 }),
                                 backgroundColor: Colors.transparent,),
                               AnimatedIconItem(
@@ -128,7 +127,7 @@ class _LoginState extends State<Login> {
                                   color: Colors.grey,
                                 ),
                                 onPressed: () => setState(() {
-                                  isEnable = false;
+                                  isEnable = true;
                                 }),
                                 backgroundColor: Colors.transparent,)
                             ],
@@ -156,7 +155,7 @@ class _LoginState extends State<Login> {
                         child: Text("¿Te olvidaste del INKWELL?",style: TextStyle(color: isHover?Colors.black:Colors.grey),),
                       ),
                     ),
-                    SizedBox(height: 30,),
+                    const SizedBox(height: 30,),
                     CustomButton2(
                       text: 'Ingresar',
                       backgroundColor: Colors.teal,
