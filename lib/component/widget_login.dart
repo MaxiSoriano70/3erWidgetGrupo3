@@ -274,9 +274,9 @@ class _LoginState extends State<Login> {
           icon: EvaIcons.facebook,
           backgroundColor: Colors.indigo,
           onTap:  () => print('lo hicimos!!'),
-          height: 40,
-          width: MediaQuery.of(context).size.width*0.45/2.5,
-          iconSize: 25,
+          height: 45,
+          width: MediaQuery.of(context).size.width*0.33,
+          iconSize: 35,
 
         ),
         const SizedBox(width: 20,),
@@ -285,9 +285,9 @@ class _LoginState extends State<Login> {
           icon: EvaIcons.google,
           backgroundColor: Colors.red,
           onTap:  () => print('lo hicimos!!'),
-          height: 40,
-          width: MediaQuery.of(context).size.width*0.45/2.5,
-          iconSize: 25,
+          height: 45,
+          width: MediaQuery.of(context).size.width*0.33,
+          iconSize: 35,
         )
       ],
     );

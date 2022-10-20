@@ -15,18 +15,9 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         backgroundColor: Colors.grey,
         body: Stack(
-          children:[
-
-            //COMENTE EL GATITO PARA QUE SE VEA DE FONDO GRIS
-            /*Container(
-              alignment: Alignment.center,
-              child: const Image(image: NetworkImage(
-                  "https://images.unsplash.com/photo-1579202673506-ca3ce28943ef"
-              ),
-                fit: BoxFit.cover,
-              )
-            ),*/
-        Login(),
+          children:  [
+           Image.asset('assets/fondo.png'),
+            Login(),
           ],
         ),
       ),
