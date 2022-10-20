@@ -3,6 +3,28 @@ import 'package:logindesafio3/component/component_button.dart';
 import 'package:animated_icon_button/animated_icon_button.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 
+class User {
+  String? _mail;
+  String? _password;
+
+  User(String mail, String password){
+    _mail=mail;
+    _password=password;
+  }
+
+  String get password => _password!;
+
+  set password(String value) {
+    _password = value;
+  }
+
+  String get mail => _mail!;
+
+  set mail(String value) {
+    _mail = value;
+  }
+}
+
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -12,8 +34,52 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  bool isHover=false;
+  List<User> users=[];
+  void fillList(){
+    users.add(User("Celeste@gmail.com","Cele123"));
+    users.add(User("Martin@silentiumapps.com","Martin123"));
+  }
+
+  bool isHover = false;
   bool isEnable = true;
+
+  late String mailUser;
+  late String password;
+  final formKey=GlobalKey<FormState>();
+
+  void isUser(String mailUser, String password){
+    bool _isUser=false;
+    for(int i=0;i<users.length;i++){
+      if(users[i].mail==mailUser && users[i].password==password){
+        print(users[i].mail);
+        print(users[i].password);
+        _isUser=true;
+      }
+    }
+    if(_isUser==false){
+      print("Usuario no encontrado");
+    }
+  }
+
+  void showValues(BuildContext context){
+    //ESTO VALIDA SI ES NULL
+    if(formKey.currentState!.validate()){
+      formKey.currentState!.save();
+      print("$mailUser $password");
+      isUser(mailUser, password);
+    }
+  }
+
+  getEnable() {
+    return isEnable;
+  }
+
+  @override
+  // ignore: must_call_super
+  void initState() {
+    fillList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return loginUser(MediaQuery.of(context).size.width);
@@ -25,120 +91,51 @@ class _LoginState extends State<Login> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           //MATERIAL
-          Material(
-            borderRadius: const BorderRadius.all(Radius.circular(32)),
-            color: Colors.white,
-            shadowColor: Colors.grey,
-            elevation: 20,
-            child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 30,horizontal: 30),
-              width: width*0.8,
-              child: widget_card_Ingreso(),
-            ),
-          ),
+          cardRegister(width),
           const SizedBox(height: 20,),
-
           //INGRESAR CON
-
-          const Text("Ingresar con",
-            style:TextStyle(
-              color: Colors.black,
-              fontSize: 18,
-            ),
-          ),
+          titleEnterWith(),
           const SizedBox(height: 20,),
           //BUTTONS
-         registro_redes_sociales(),
+          registerWithNetworks(),
           const SizedBox(height: 20,),
-
           //REGISTRATE AQUI
-         widget_registro_externo(),
+          registerHere(),
+          const SizedBox(height: 20,),
         ],
       ),
     );
   }
 
-  getEnable() {
-    return isEnable;
-  }
-
-  widget_registro_externo() {
-    return  Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Text("Si no tenés cuenta ",
-          style:TextStyle(
-            color: Colors.black,
-            fontSize: 18,
-          ),
-        ),
-        InkWell(
-          onTap: (){},
-          child: const Text("registrate aquí",
-              style:TextStyle(
-                decoration: TextDecoration.underline,
-                color: Colors.black,
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              )
-          ),
-        )
-      ],
-    );
-  }
-
-  registro_redes_sociales() {
-    return  Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Text("Si no tenés cuenta ",
-          style:TextStyle(
-            color: Colors.black,
-            fontSize: 18,
-          ),
-        ),
-        InkWell(
-          onTap: (){},
-          child: const Text("registrate aquí",
-              style:TextStyle(
-                decoration: TextDecoration.underline,
-                color: Colors.black,
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              )
-          ),
-        )
-      ],
-    );
-  }
-
-  widget_link() {
-    return MouseRegion(
-      onEnter: (e){
-        setState(() {
-          isHover=true;
-        });
-      },
-      onExit: (e){
-        setState(() {
-          isHover=false;
-        });
-      },
-      child: InkWell(
-        onTap: (){
-        },
-        hoverColor: Colors.white,
-        child: Text("¿Te olvidaste del INKWELL?",style: TextStyle(color: isHover?Colors.black:Colors.grey),),
+  Widget cardRegister(double width){
+    return Material(
+      borderRadius: const BorderRadius.all(Radius.circular(32)),
+      color: Colors.white,
+      shadowColor: Colors.grey,
+      elevation: 20,
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 30,horizontal: 30),
+        width: width*0.8,
+        child: registerUser(),
       ),
     );
   }
 
-  widget_card_Ingreso() {
+  Widget registerUser() {
     return Form(
+      key: formKey,
       child: Column(
         children: [
           //CORREO
-          TextField(
+          TextFormField(
+            onSaved: (value){
+              mailUser=value!;
+            },
+            validator: (value){
+             if(value!.isEmpty){
+               return "Llene esta campo";
+             }
+            },
             keyboardType: TextInputType.emailAddress,
             cursorColor: Colors.black,
             decoration: InputDecoration(
@@ -158,7 +155,15 @@ class _LoginState extends State<Login> {
           const SizedBox(height: 20,),
 
           //CONTRASEÑA
-          TextField(
+          TextFormField(
+              onSaved: (value){
+                password=value!;
+              },
+              validator: (value){
+                if(value!.isEmpty){
+                  return "Llene esta campo";
+                }
+              },
               obscureText: getEnable(),
               cursorColor: Colors.black,
               style: const TextStyle(
@@ -204,15 +209,15 @@ class _LoginState extends State<Login> {
                       )
                   ))),
           const SizedBox(height: 20,),
-
-
           //OLVIDASTE TU CONTRASEÑA
-          widget_link(),
+          forgotPassword(),
           const SizedBox(height: 30,),
           CustomButton2(
             text: 'Ingresar',
             backgroundColor: Colors.teal,
-            onTap:  () => print('lo hicimos!!'),
+            onTap:  (){
+              showValues(context);
+            },
             height: 50,
             width: 345,
             iconSize: 12,
@@ -222,4 +227,85 @@ class _LoginState extends State<Login> {
     );
   }
 
+  Widget forgotPassword() {
+    return MouseRegion(
+      onEnter: (e){
+        setState(() {
+          isHover=true;
+        });
+      },
+      onExit: (e){
+        setState(() {
+          isHover=false;
+        });
+      },
+      child: InkWell(
+        onTap: (){
+        },
+        hoverColor: Colors.white,
+        child: Text("¿Te olvidaste del INKWELL?",style: TextStyle(color: isHover?Colors.black:Colors.grey),),
+      ),
+    );
+  }
+
+  Widget titleEnterWith(){
+    return const Text("Ingresar con",
+      style:TextStyle(
+        color: Colors.black,
+        fontSize: 18,
+      ),
+    );
+  }
+
+  Widget registerWithNetworks(){
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        CustomButton2(
+          text: '',
+          icon: EvaIcons.facebook,
+          backgroundColor: Colors.indigo,
+          onTap:  () => print('lo hicimos!!'),
+          //height: 50,
+          width: 200,
+          iconSize: 40,
+        ),
+        const SizedBox(width: 20,),
+        CustomButton2(
+          text: '',
+          icon: EvaIcons.google,
+          backgroundColor: Colors.red,
+          onTap:  () => print('lo hicimos!!'),
+          //height: 50,
+          width: 200,
+          iconSize: 40,
+        )
+      ],
+    );
+  }
+
+  Widget registerHere() {
+    return  Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Text("Si no tenés cuenta ",
+          style:TextStyle(
+            color: Colors.black,
+            fontSize: 18,
+          ),
+        ),
+        InkWell(
+          onTap: (){},
+          child: const Text("registrate aquí",
+              style:TextStyle(
+                decoration: TextDecoration.underline,
+                color: Colors.black,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              )
+          ),
+        )
+      ],
+    );
+  }
 }
