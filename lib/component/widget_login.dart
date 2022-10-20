@@ -33,92 +33,7 @@ class _LoginState extends State<Login> {
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 30,horizontal: 30),
               width: width*0.8,
-              child: Form(
-                child: Column(
-                  children: [
-                    //CORREO
-                    TextField(
-                      keyboardType: TextInputType.emailAddress,
-                      cursorColor: Colors.black,
-                      decoration: InputDecoration(
-                        hintText: "Correo",
-                        contentPadding: const EdgeInsets.fromLTRB(20, 18, 20, 18),
-                        filled: true,
-                        fillColor: const Color(0xffc9c9c9),
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(20)
-                        ),
-                      ),
-                      style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 18),
-                    ),
-                    const SizedBox(height: 20,),
-
-                    //CONTRASEÑA
-                    TextField(
-                        obscureText: getEnable(),
-                        cursorColor: Colors.black,
-                        style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 18),
-                        decoration: InputDecoration(
-                            hintText: "Contraseña",
-                            contentPadding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                            filled: true,
-
-                            fillColor: const Color(0xffc9c9c9),
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                                borderRadius: BorderRadius.circular(20)
-                            ),
-                            suffixIcon:  Align(
-                                widthFactor: 1.5,
-                                heightFactor: 1.0,
-                                child: AnimatedIconButton(
-                                  splashColor: Colors.transparent,
-                                  highlightColor: Colors.transparent,
-                                  hoverColor: Colors.transparent,
-                                  icons: [
-                                    AnimatedIconItem(
-                                      icon: const Icon(
-                                        Icons.visibility_off_outlined,
-                                        color: Colors.grey,
-                                      ),
-                                      onPressed: () => setState(() {
-                                        isEnable = false;
-                                      }),
-                                      backgroundColor: Colors.transparent,),
-                                    AnimatedIconItem(
-                                      icon: const Icon(
-                                        Icons.remove_red_eye_outlined,
-                                        color: Colors.grey,
-                                      ),
-                                      onPressed: () => setState(() {
-                                        isEnable = true;
-                                      }),
-                                      backgroundColor: Colors.transparent,)
-                                  ],
-                                )
-                            ))),
-                    const SizedBox(height: 20,),
-
-
-                    //OLVIDASTE TU CONTRASEÑA
-                    widget_link(),
-                    const SizedBox(height: 30,),
-                    CustomButton2(
-                      text: 'Ingresar',
-                      backgroundColor: Colors.teal,
-                      onTap:  () => print('lo hicimos!!'),
-                      height: 50,
-                      width: 345,
-                      iconSize: 12,
-                    ),
-                  ],
-                ),
-              ),
+              child: widget_card_Ingreso(),
             ),
           ),
           const SizedBox(height: 20,),
@@ -214,6 +129,95 @@ class _LoginState extends State<Login> {
         },
         hoverColor: Colors.white,
         child: Text("¿Te olvidaste del INKWELL?",style: TextStyle(color: isHover?Colors.black:Colors.grey),),
+      ),
+    );
+  }
+
+  widget_card_Ingreso() {
+    return Form(
+      child: Column(
+        children: [
+          //CORREO
+          TextField(
+            keyboardType: TextInputType.emailAddress,
+            cursorColor: Colors.black,
+            decoration: InputDecoration(
+              hintText: "Correo",
+              contentPadding: const EdgeInsets.fromLTRB(20, 18, 20, 18),
+              filled: true,
+              fillColor: const Color(0xffc9c9c9),
+              border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(20)
+              ),
+            ),
+            style: const TextStyle(
+                color: Colors.black,
+                fontSize: 18),
+          ),
+          const SizedBox(height: 20,),
+
+          //CONTRASEÑA
+          TextField(
+              obscureText: getEnable(),
+              cursorColor: Colors.black,
+              style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 18),
+              decoration: InputDecoration(
+                  hintText: "Contraseña",
+                  contentPadding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                  filled: true,
+
+                  fillColor: const Color(0xffc9c9c9),
+                  border: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(20)
+                  ),
+                  suffixIcon:  Align(
+                      widthFactor: 1.5,
+                      heightFactor: 1.0,
+                      child: AnimatedIconButton(
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        icons: [
+                          AnimatedIconItem(
+                            icon: const Icon(
+                              Icons.visibility_off_outlined,
+                              color: Colors.grey,
+                            ),
+                            onPressed: () => setState(() {
+                              isEnable = false;
+                            }),
+                            backgroundColor: Colors.transparent,),
+                          AnimatedIconItem(
+                            icon: const Icon(
+                              Icons.remove_red_eye_outlined,
+                              color: Colors.grey,
+                            ),
+                            onPressed: () => setState(() {
+                              isEnable = true;
+                            }),
+                            backgroundColor: Colors.transparent,)
+                        ],
+                      )
+                  ))),
+          const SizedBox(height: 20,),
+
+
+          //OLVIDASTE TU CONTRASEÑA
+          widget_link(),
+          const SizedBox(height: 30,),
+          CustomButton2(
+            text: 'Ingresar',
+            backgroundColor: Colors.teal,
+            onTap:  () => print('lo hicimos!!'),
+            height: 50,
+            width: 345,
+            iconSize: 12,
+          ),
+        ],
       ),
     );
   }
