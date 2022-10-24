@@ -2,71 +2,38 @@ import 'package:flutter/material.dart';
 import 'package:logindesafio3/component/component_button.dart';
 import 'package:animated_icon_button/animated_icon_button.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
-
-class User {
-  String? _mail;
-  String? _password;
-
-  User(String mail, String password){
-    _mail=mail;
-    _password=password;
-  }
-
-  String get password => _password!;
-
-  set password(String value) {
-    _password = value;
-  }
-
-  String get mail => _mail!;
-
-  set mail(String value) {
-    _mail = value;
-  }
-}
-
+import 'package:logindesafio3/models/User_Models.dart';
 
 class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+  final Function(User)? onTapLogin;
+  final Function(String)? onTapForgotPassword;
+  final Function(String)? onTapRegisterFacebook;
+  final Function(String)? onTapRegisterGoogle;
+  final Function(String)? onTapRegisterHere;
+
+  const Login({Key? key,this.onTapLogin,this.onTapForgotPassword,this.onTapRegisterFacebook,this.onTapRegisterGoogle,this.onTapRegisterHere
+  }) : super(key: key);
 
   @override
   State<Login> createState() => _LoginState();
 }
 
 class _LoginState extends State<Login> {
-  List<User> users=[];
-  void fillList(){
-    users.add(User("Celeste@gmail.com","Cele123"));
-    users.add(User("Martin@silentiumapps.com","Martin123"));
-  }
+
+  late User user;
+  late String mailUser;
+  late String password;
 
   bool isHover = false;
   bool isEnable = true;
 
-  late String mailUser;
-  late String password;
   final formKey=GlobalKey<FormState>();
-
-  void isUser(String mailUser, String password){
-    bool _isUser=false;
-    for(int i=0;i<users.length;i++){
-      if(users[i].mail==mailUser && users[i].password==password){
-        print(users[i].mail);
-        print(users[i].password);
-        _isUser=true;
-      }
-    }
-    if(_isUser==false){
-      print("Usuario no encontrado");
-    }
-  }
 
   void showValues(BuildContext context){
     //ESTO VALIDA SI ES NULL
     if(formKey.currentState!.validate()){
       formKey.currentState!.save();
-      print("$mailUser $password");
-      isUser(mailUser, password);
+      user=User(mailUser, password);
     }
   }
 
@@ -75,17 +42,11 @@ class _LoginState extends State<Login> {
   }
 
   @override
-  // ignore: must_call_super
-  void initState() {
-    fillList();
-  }
-
-  @override
   Widget build(BuildContext context) {
     double width=MediaQuery.of(context).size.width;
     double height=MediaQuery.of(context).size.height;
     return Positioned(
-        top: 150,
+        top: 290,
         right: width*0.1,
         left: width*0.1,
         child: loginUser(width,height)
@@ -139,8 +100,9 @@ class _LoginState extends State<Login> {
             },
             validator: (value){
               if(value!.isEmpty){
-                return "Llene esta campo";
+                return "*Campo Obligatorio";
               }
+              return null;
             },
             keyboardType: TextInputType.emailAddress,
             cursorColor: Colors.black,
@@ -167,8 +129,9 @@ class _LoginState extends State<Login> {
               },
               validator: (value){
                 if(value!.isEmpty){
-                  return "Llene esta campo";
+                  return "*Campo Obligatorio";
                 }
+                return null;
               },
               obscureText: getEnable(),
               cursorColor: Colors.black,
@@ -223,8 +186,9 @@ class _LoginState extends State<Login> {
           CustomButton2(
             text: 'Ingresar',
             backgroundColor: Colors.teal,
-            onTap:  (){
+            onTap: (){
               showValues(context);
+              widget.onTapLogin!(user);
             },
             height: 45,
             width: 390,
@@ -251,6 +215,7 @@ class _LoginState extends State<Login> {
         padding: const EdgeInsets.only(left: 20),
         child: InkWell(
           onTap: (){
+            widget.onTapForgotPassword!("Hicieron Click en Olvidaste Tu Contraseña");
           },
           hoverColor: Colors.white,
           child: Text("¿Olvidaste tu contraseña?",style: TextStyle(color: isHover?Colors.black:Colors.grey),),
@@ -279,7 +244,9 @@ class _LoginState extends State<Login> {
               text: '',
               icon: EvaIcons.facebook,
               backgroundColor: Colors.indigo,
-              onTap:  () => print('lo hicimos!!'),
+              onTap:  (){
+                widget.onTapRegisterFacebook!("Hicieron Click en Ingresar con Facebook");
+              },
               height: 40,
               width: MediaQuery.of(context).size.width*0.45/2.5,
               iconSize: 25,
@@ -291,7 +258,9 @@ class _LoginState extends State<Login> {
                 text: '',
                 icon: EvaIcons.google,
                 backgroundColor: Colors.red,
-                onTap:  () => print('lo hicimos!!'),
+                onTap:  (){
+                  widget.onTapRegisterGoogle!("Hicieron Click en Ingresar con Google");
+                },
                 height: 40,
                 width: MediaQuery.of(context).size.width*0.45/2.5,
                 iconSize: 25,
@@ -313,7 +282,9 @@ class _LoginState extends State<Login> {
           ),
         ),
         InkWell(
-          onTap: (){},
+          onTap: (){
+            widget.onTapRegisterHere!("Hicieron Click en Registrate Aquí");
+          },
           child: const Text("registrate aquí",
               style:TextStyle(
                 decoration: TextDecoration.underline,

@@ -1,13 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:logindesafio3/component/widget_login.dart';
 
+import 'models/User_Models.dart';
+
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
+
+  List<User> users=[
+    User("Celeste@gmail.com","Cele123"),
+    User("Martin@silentiumapps.com","Martin123")
+  ];
+
+  void isUser(String mailUser, String password){
+    bool isUser=false;
+    for(int i=0;i<users.length;i++){
+      print(users[i].mail);
+      print(mailUser);
+      if(users[i].mail==mailUser && users[i].password==password){
+        isUser=true;
+      }
+    }
+    if(isUser==false){
+      print("Usuario no encontrado");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -18,8 +40,17 @@ class MyApp extends StatelessWidget {
           height: double.infinity,
           color: Colors.grey,
           child: Stack(
-            children: const [
-              Login()
+            children: [
+              Login(
+                onTapLogin: (user) {
+                  print(user);
+                  isUser(user.mail,user.password);
+                  },
+                onTapForgotPassword: (password){print(password);},
+                onTapRegisterFacebook: (facebook){print(facebook);},
+                onTapRegisterGoogle: (google){print(google);},
+                onTapRegisterHere: (registerHere){print(registerHere);},
+              ),
             ],
           ),
         ),
