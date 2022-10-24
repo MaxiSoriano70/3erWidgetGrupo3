@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:logindesafio3/component/component_button.dart';
 import 'package:animated_icon_button/animated_icon_button.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
-import 'package:email_validator/email_validator.dart';
 
 class User {
   String? _mail;
@@ -83,16 +82,20 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    return loginUser(MediaQuery.of(context).size.width,MediaQuery.of(context).size.height);
+    double width=MediaQuery.of(context).size.width;
+    double height=MediaQuery.of(context).size.height;
+    return Positioned(
+        top: 150,
+        right: width*0.1,
+        left: width*0.1,
+        child: loginUser(width,height)
+    );
   }
 
   Widget loginUser(double width,double height){
-    return Container(
+    return SizedBox(
       width: width*0.8,
-      height: height*0.6,
-      margin: EdgeInsets.fromLTRB(width*0.1, height*0.25, width*0.1, height*0.15),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           //MATERIAL
           cardRegister(width),
@@ -114,7 +117,6 @@ class _LoginState extends State<Login> {
   Widget cardRegister(double width){
     return Material(
       borderRadius: const BorderRadius.all(Radius.circular(32)),
-      color: Colors.white,
       shadowColor: Colors.grey,
       elevation: 20,
       child: Container(
@@ -156,7 +158,7 @@ class _LoginState extends State<Login> {
                 color: Colors.black,
                 fontSize: 16),
           ),
-          const SizedBox(height: 15,),
+          const SizedBox(height: 20,),
 
           //CONTRASEÑA
           TextFormField(
@@ -213,10 +215,11 @@ class _LoginState extends State<Login> {
                         ],
                       )
                   ))),
-          const SizedBox(height: 15,),
+          const SizedBox(height: 20,),
+
           //OLVIDASTE TU CONTRASEÑA
           forgotPassword(),
-          const SizedBox(height: 25,),
+          const SizedBox(height: 30,),
           CustomButton2(
             text: 'Ingresar',
             backgroundColor: Colors.teal,
@@ -245,7 +248,7 @@ class _LoginState extends State<Login> {
         });
       },
       child: Padding(
-        padding: const EdgeInsets.only(left: 10),
+        padding: const EdgeInsets.only(left: 20),
         child: InkWell(
           onTap: (){
           },
@@ -266,30 +269,36 @@ class _LoginState extends State<Login> {
   }
 
   Widget registerWithNetworks(){
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        CustomButton2(
-          text: '',
-          icon: EvaIcons.facebook,
-          backgroundColor: Colors.indigo,
-          onTap:  () => print('lo hicimos!!'),
-          height: 40,
-          width: MediaQuery.of(context).size.width*0.45/2.5,
-          iconSize: 25,
-
-        ),
-        const SizedBox(width: 20,),
-        CustomButton2(
-          text: '',
-          icon: EvaIcons.google,
-          backgroundColor: Colors.red,
-          onTap:  () => print('lo hicimos!!'),
-          height: 40,
-          width: MediaQuery.of(context).size.width*0.45/2.5,
-          iconSize: 25,
-        )
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 30),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            child: CustomButton2(
+              text: '',
+              icon: EvaIcons.facebook,
+              backgroundColor: Colors.indigo,
+              onTap:  () => print('lo hicimos!!'),
+              height: 40,
+              width: MediaQuery.of(context).size.width*0.45/2.5,
+              iconSize: 25,
+            ),
+          ),
+          const SizedBox(width: 20,),
+          Expanded(
+              child: CustomButton2(
+                text: '',
+                icon: EvaIcons.google,
+                backgroundColor: Colors.red,
+                onTap:  () => print('lo hicimos!!'),
+                height: 40,
+                width: MediaQuery.of(context).size.width*0.45/2.5,
+                iconSize: 25,
+              )
+          ),
+        ],
+      ),
     );
   }
 
