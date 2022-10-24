@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         backgroundColor: Colors.grey,
         body: Stack(
           children:  [
-           Image.asset('assets/fondo.png'),
+           Image.asset('assets/fondo.png', fit: BoxFit.cover, scale: 0.1, width: double.infinity, height: double.infinity),
             Login(),
           ],
         ),

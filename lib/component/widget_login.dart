@@ -4,28 +4,6 @@ import 'package:animated_icon_button/animated_icon_button.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:email_validator/email_validator.dart';
 
-class User {
-  String? _mail;
-  String? _password;
-
-  User(String mail, String password){
-    _mail=mail;
-    _password=password;
-  }
-
-  String get password => _password!;
-
-  set password(String value) {
-    _password = value;
-  }
-
-  String get mail => _mail!;
-
-  set mail(String value) {
-    _mail = value;
-  }
-}
-
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -35,52 +13,6 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  List<User> users=[];
-  void fillList(){
-    users.add(User("Celeste@gmail.com","Cele123"));
-    users.add(User("Martin@silentiumapps.com","Martin123"));
-  }
-
-  bool isHover = false;
-  bool isEnable = true;
-
-  late String mailUser;
-  late String password;
-  final formKey=GlobalKey<FormState>();
-
-  void isUser(String mailUser, String password){
-    bool _isUser=false;
-    for(int i=0;i<users.length;i++){
-      if(users[i].mail==mailUser && users[i].password==password){
-        print(users[i].mail);
-        print(users[i].password);
-        _isUser=true;
-      }
-    }
-    if(_isUser==false){
-      print("Usuario no encontrado");
-    }
-  }
-
-  void showValues(BuildContext context){
-    //ESTO VALIDA SI ES NULL
-    if(formKey.currentState!.validate()){
-      formKey.currentState!.save();
-      print("$mailUser $password");
-      isUser(mailUser, password);
-    }
-  }
-
-  getEnable() {
-    return isEnable;
-  }
-
-  @override
-  // ignore: must_call_super
-  void initState() {
-    fillList();
-  }
-
   @override
   Widget build(BuildContext context) {
     return loginUser(MediaQuery.of(context).size.width,MediaQuery.of(context).size.height);
@@ -89,7 +21,7 @@ class _LoginState extends State<Login> {
   Widget loginUser(double width,double height){
     return Container(
       width: width*0.8,
-      height: height*0.6,
+      height: height*0.7,
       margin: EdgeInsets.fromLTRB(width*0.1, height*0.25, width*0.1, height*0.15),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -102,10 +34,9 @@ class _LoginState extends State<Login> {
           const SizedBox(height: 20,),
           //BUTTONS
           registerWithNetworks(),
-          const SizedBox(height: 20,),
+          const SizedBox(height: 15,),
           //REGISTRATE AQUI
           registerHere(),
-          const SizedBox(height: 20,),
         ],
       ),
     );
@@ -274,7 +205,7 @@ class _LoginState extends State<Login> {
           icon: EvaIcons.facebook,
           backgroundColor: Colors.indigo,
           onTap:  () => print('lo hicimos!!'),
-          height: 45,
+          height: 35,
           width: MediaQuery.of(context).size.width*0.33,
           iconSize: 35,
 
@@ -285,7 +216,7 @@ class _LoginState extends State<Login> {
           icon: EvaIcons.google,
           backgroundColor: Colors.red,
           onTap:  () => print('lo hicimos!!'),
-          height: 45,
+          height: 35,
           width: MediaQuery.of(context).size.width*0.33,
           iconSize: 35,
         )
