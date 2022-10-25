@@ -47,7 +47,11 @@ class _LoginState extends State<Login> {
     double height=MediaQuery.of(context).size.height;
     return Positioned(
 <<<<<<< HEAD
+<<<<<<< HEAD
         top: 275,
+=======
+        top: 290,
+>>>>>>> e7a0967be6f056beb2e5e24a53865a84469fc2d8
 =======
         top: 290,
 >>>>>>> e7a0967be6f056beb2e5e24a53865a84469fc2d8
