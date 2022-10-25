@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:logindesafio3/component/widget_login.dart';
 
-import 'models/User_Models.dart';
+import 'models/user_models.dart';
 
 
 void main() {
@@ -19,13 +19,14 @@ class MyApp extends StatelessWidget {
   void isUser(String mailUser, String password){
     bool isUser=false;
     for(int i=0;i<users.length;i++){
-      print(users[i].mail);
-      print(mailUser);
       if(users[i].mail==mailUser && users[i].password==password){
         isUser=true;
       }
     }
-    if(isUser==false){
+    if(isUser==true){
+      print("Usuario encontrado");
+    }
+    else{
       print("Usuario no encontrado");
     }
   }
@@ -44,7 +45,7 @@ class MyApp extends StatelessWidget {
               Image.asset('assets/fondo.png', height: double.infinity, width: double.infinity, fit: BoxFit.cover,),
               Login(
                 onTapLogin: (user) {
-                  print(user);
+                  print("${user.mail} ${user.password}");
                   isUser(user.mail,user.password);
                   },
                 onTapForgotPassword: (password){print(password);},

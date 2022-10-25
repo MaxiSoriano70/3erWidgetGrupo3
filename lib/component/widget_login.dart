@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:logindesafio3/component/component_button.dart';
 import 'package:animated_icon_button/animated_icon_button.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
-import 'package:logindesafio3/models/User_Models.dart';
+import 'package:logindesafio3/models/user_models.dart';
 
 class Login extends StatefulWidget {
   final Function(User)? onTapLogin;
@@ -34,6 +34,7 @@ class _LoginState extends State<Login> {
     if(formKey.currentState!.validate()){
       formKey.currentState!.save();
       user=User(mailUser, password);
+      widget.onTapLogin!(user);
     }
   }
 
@@ -44,16 +45,15 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     double width=MediaQuery.of(context).size.width;
-    double height=MediaQuery.of(context).size.height;
     return Positioned(
         top: 290,
         right: width*0.1,
         left: width*0.1,
-        child: loginUser(width,height)
+        child: loginUser(width)
     );
   }
 
-  Widget loginUser(double width,double height){
+  Widget loginUser(double width){
     return SizedBox(
       width: width*0.8,
       child: Column(
@@ -188,7 +188,6 @@ class _LoginState extends State<Login> {
             backgroundColor: Colors.teal,
             onTap: (){
               showValues(context);
-              widget.onTapLogin!(user);
             },
             height: 45,
             width: 390,
