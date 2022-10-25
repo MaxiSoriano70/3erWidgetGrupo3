@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
           color: Colors.grey,
           child: Stack(
             children: [
-              Image.asset('assets/bingo! (1).png', height: double.infinity, width: double.infinity, fit: BoxFit.cover,),
+              Image.asset('assets/bingo.png', height: double.infinity, width: double.infinity, fit: BoxFit.cover,),
               Login(
                 onTapLogin: (user) {
                   print("${user.mail} ${user.password}");

@@ -45,8 +45,9 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     double width=MediaQuery.of(context).size.width;
+    double height=MediaQuery.of(context).size.height;
     return Positioned(
-        top: 290,
+        top: height*0.35,
         right: width*0.1,
         left: width*0.1,
         child: loginUser(width)
