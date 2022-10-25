@@ -40,14 +40,6 @@ class MyApp extends StatelessWidget {
           height: double.infinity,
           color: Colors.grey,
           child: Stack(
-<<<<<<< HEAD
-<<<<<<< HEAD
-            children:  [
-              Image.asset('assets/fondo.png', fit: BoxFit.cover, height: double.infinity, width: double.infinity,),
-              Login()
-=======
-=======
->>>>>>> e7a0967be6f056beb2e5e24a53865a84469fc2d8
             children: [
               Login(
                 onTapLogin: (user) {
@@ -59,10 +51,6 @@ class MyApp extends StatelessWidget {
                 onTapRegisterGoogle: (google){print(google);},
                 onTapRegisterHere: (registerHere){print(registerHere);},
               ),
-<<<<<<< HEAD
->>>>>>> e7a0967be6f056beb2e5e24a53865a84469fc2d8
-=======
->>>>>>> e7a0967be6f056beb2e5e24a53865a84469fc2d8
             ],
           ),
         ),
