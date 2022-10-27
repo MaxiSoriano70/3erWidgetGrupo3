@@ -6,10 +6,10 @@ import 'package:logindesafio3/models/user_models.dart';
 
 class Login extends StatefulWidget {
   final Function(User)? onTapLogin;
-  final Function(String)? onTapForgotPassword;
-  final Function(String)? onTapRegisterFacebook;
-  final Function(String)? onTapRegisterGoogle;
-  final Function(String)? onTapRegisterHere;
+  final Function()? onTapForgotPassword;
+  final Function()? onTapRegisterFacebook;
+  final Function()? onTapRegisterGoogle;
+  final Function()? onTapRegisterHere;
 
   const Login({Key? key,this.onTapLogin,this.onTapForgotPassword,this.onTapRegisterFacebook,this.onTapRegisterGoogle,this.onTapRegisterHere
   }) : super(key: key);
@@ -215,7 +215,7 @@ class _LoginState extends State<Login> {
         padding: const EdgeInsets.only(left: 20),
         child: InkWell(
           onTap: (){
-            widget.onTapForgotPassword!("Hicieron Click en Olvidaste Tu Contraseña");
+            widget.onTapForgotPassword!();
           },
           hoverColor: Colors.white,
           child: Text("¿Olvidaste tu contraseña?",style: TextStyle(color: isHover?Colors.black:Colors.grey),),
@@ -245,7 +245,7 @@ class _LoginState extends State<Login> {
               icon: EvaIcons.facebook,
               backgroundColor: Colors.indigo,
               onTap:  (){
-                widget.onTapRegisterFacebook!("Hicieron Click en Ingresar con Facebook");
+                widget.onTapRegisterFacebook!();
               },
               height: 40,
               width: MediaQuery.of(context).size.width*0.45/2.5,
@@ -259,7 +259,7 @@ class _LoginState extends State<Login> {
                 icon: EvaIcons.google,
                 backgroundColor: Colors.red,
                 onTap:  (){
-                  widget.onTapRegisterGoogle!("Hicieron Click en Ingresar con Google");
+                  widget.onTapRegisterGoogle!();
                 },
                 height: 40,
                 width: MediaQuery.of(context).size.width*0.45/2.5,
@@ -283,7 +283,7 @@ class _LoginState extends State<Login> {
         ),
         InkWell(
           onTap: (){
-            widget.onTapRegisterHere!("Hicieron Click en Registrate Aquí");
+            widget.onTapRegisterHere!();
           },
           child: const Text("registrate aquí",
               style:TextStyle(

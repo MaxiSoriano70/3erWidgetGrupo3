@@ -48,10 +48,10 @@ class MyApp extends StatelessWidget {
                   print("${user.mail} ${user.password}");
                   isUser(user.mail,user.password);
                   },
-                onTapForgotPassword: (password){print(password);},
-                onTapRegisterFacebook: (facebook){print(facebook);},
-                onTapRegisterGoogle: (google){print(google);},
-                onTapRegisterHere: (registerHere){print(registerHere);},
+                onTapForgotPassword: (){print("Hicieron Click en Olvidaste Tu Contraseña");},
+                onTapRegisterFacebook: (){print("Hicieron Click en Ingresar con Facebook");},
+                onTapRegisterGoogle: (){print("Hicieron Click en Ingresar con Google");},
+                onTapRegisterHere: (){print("Hicieron Click en Registrate Aquí");},
               ),
             ],
           ),
